@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modèles{% endblock %}
+
+{% block body %}
+    <div class="d-flex align-center justify-content-between w-100">
+        <h1>Liste des modèles</h1>
+        <a class="d-flex" href="{{ path('model_new') }}"><button class="btn btn-primary">Ajouter un produit</button></a>
+    </div>
+    {% if models is not empty %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Détail</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for model in models %}
+                <tr>
+                    <td>{{ model.name }}</td>
+                    <td>{{ model.prize }}</td>
+
+                    <td>
+                        <a href="{{ path('model_edit', {'id': model.id}) }}">
+                            Afficher
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('model_delete', {'id': model.id}) }}">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Il n'y a aucun modèle</p>
+    {% endif %}
+{% endblock %}

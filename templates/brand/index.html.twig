@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Marques{% endblock %}
+{% block stylesheets %}
+    <style>
+        th {
+            flex: 1;
+        }
+        td {
+            height: 50px;
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        tr {
+            display: flex;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="d-flex align-center justify-content-between w-100">
+        <h1>Liste des marques</h1>
+        <a class="d-flex" href="{{ path('brand_new') }}"><button class="btn btn-primary">Ajouter une marque</button></a>
+    </div>
+    {% if brands is not empty %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nom</th>
+                <th>Logo</th>
+                <th>Créé le</th>
+                <th>Edit</th>
+                <th>Supprimer</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for brand in brands %}
+                <tr>
+                    <td>{{ brand.name }}</td>
+                    <td>
+                        {% if brand.logo is not null %}
+                            <img src="{{ asset('upload/' ~ brand.logo) }}" style="height: 45px;" alt="logo" >
+                        {% endif %}
+                    </td>
+                    <td>{{ brand.createdAt|date('Y-m-d H:i:s') }}</td>
+
+                    <td>
+                        <a href="{{ path('brand_edit', {'id': brand.id}) }}">
+                            Editer
+                        </a>
+                    </td>
+                    <td>
+                        <a href="{{ path('brand_delete', {'id': brand.id}) }}">
+                            Supprimer
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Il n'y a aucune marque</p>
+    {% endif %}
+{% endblock %}
